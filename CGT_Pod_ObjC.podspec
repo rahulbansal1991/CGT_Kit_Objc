@@ -19,7 +19,7 @@ s.author             = { "Rahul Bansal" => "rahul.bansal@cgt.co.in" }
 s.platform     = :ios, "7.0"
 
 # ――― Source Location ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
-s.source       = { :git => "https://github.com/rahulbansal1991/CGT_Kit_Objc.git", :tag => "1.2" }
+s.source       = { :git => "https://github.com/rahulbansal1991/CGT_Kit_Objc.git", :tag => "1.3" }
 
 # ――― Source Code ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
 s.source_files  = "NetworkManager/*.{h,m}"
