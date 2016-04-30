@@ -2,7 +2,7 @@ Pod::Spec.new do |s|
 
 # ―――  Spec Metadata  ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
 s.name         = "CGT_Pod_ObjC"
-s.version      = "1.0"
+s.version      = "1.1"
 s.summary      = "CGT_Pod_ObjC contains pods of all the basic and necessary libraries"
 s.description  = <<-DESC
 * An extensive blocks-based Objective C wrapper.
@@ -19,7 +19,7 @@ s.author             = { "Rahul Bansal" => "rahul.bansal@cgt.co.in" }
 s.platform     = :ios, "7.0"
 
 # ――― Source Location ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
-s.source       = { :git => "https://github.com/rahulbansal1991/CGT_Kit_Objc.git", :tag => "1.3" }
+s.source       = { :git => "https://github.com/rahulbansal1991/CGT_Kit_Objc.git", :tag => "1.4" }
 
 # ――― Source Code ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
 s.source_files  = "NetworkManager/*.{h,m}"
