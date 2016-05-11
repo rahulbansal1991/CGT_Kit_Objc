@@ -40,18 +40,11 @@ typedef void (^RequestFail)(AFHTTPRequestOperation *request, NSError *error);
         withSuccessHandler:(RequestSuccess)success
         withFailureHandler:(RequestFail)failure;
 
-+ (void)executePostWithUrl:(NSString*)url
-             andParameters:(NSDictionary*)parameters
-                andHeaders:(NSDictionary*)headers
-andAuthorizationHeaderUser:(NSString *)user
-andAuthrozationHeaderPassword:(NSString*)password
-        withSuccessHandler:(RequestSuccess)success
-        withFailureHandler:(RequestFail)failure;
-
 + (void)executePutWithUrl:(NSString*)url
             andParameters:(NSDictionary*)parameters
                andHeaders:(NSDictionary*)headers
-       withSuccessHandler:(RequestSuccess)success withFailureHandler:(RequestFail)failure;
+       withSuccessHandler:(RequestSuccess)success
+       withFailureHandler:(RequestFail)failure;
 
 + (void)executeGetWithUrl:(NSString*)url
             andParameters:(NSDictionary*)parameters

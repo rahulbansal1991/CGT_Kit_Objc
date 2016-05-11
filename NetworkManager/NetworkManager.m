@@ -12,6 +12,11 @@
 
 static NSMutableArray *networkQueue = nil;
 
++ (NSSet*)acceptableContentTypes
+{
+    return [NSSet setWithObjects:@"application/json", @"text/json", @"text/javascript",@"text/html", nil];
+}
+
 + (NSMutableArray *) getNetworkQueue{
     if(networkQueue != nil)
         return networkQueue;
@@ -32,54 +37,6 @@ static NSMutableArray *networkQueue = nil;
             
         }
     }
-}
-
-+ (void)executePostWithUrl:(NSString*)url
-             andParameters:(NSDictionary*)parameters
-                andHeaders:(NSDictionary*)headers
-andAuthorizationHeaderUser:(NSString*)user
-andAuthrozationHeaderPassword:(NSString*)password
-        withSuccessHandler:(RequestSuccess)success
-        withFailureHandler:(RequestFail)failure
-{
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-    [manager setRequestSerializer:[AFJSONRequestSerializer serializer]];
-    [[manager securityPolicy]setAllowInvalidCertificates:YES];
-    [[manager requestSerializer]setAuthorizationHeaderFieldWithUsername:user password:password];
-    [manager setResponseSerializer:[AFJSONResponseSerializer serializer]];
-    
-    [[manager requestSerializer] setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
-    // check if custom headers are present and add them
-    if (headers != nil) {
-        [headers enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
-            [[manager requestSerializer] setValue:obj forHTTPHeaderField:key];
-        }];
-    }
-    AFHTTPRequestOperation *operation;
-
-    operation = [manager POST:url parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject)
-    {
-        if ([operation isCancelled])
-        {
-            return;
-        }
-      
-        [[self getNetworkQueue] removeObject:operation];
-        
-        bool apiSuccess = YES;
-        success(operation, responseObject, apiSuccess);
-
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error)
-    {
-        if ([operation isCancelled])
-        {
-            return;
-        }
-        
-        failure(operation, error);
-    } autoRetry:REQUEST_RETRY_AFTER_TIMEOUT retryInterval:REQUEST_TIMEOUT_INTERVAL];
-    
-    [[self getNetworkQueue] addObject:operation];
 }
 
 + (void)executePostWithUrl:(NSString*)url
@@ -119,11 +76,7 @@ andAuthrozationHeaderPassword:(NSString*)password
     [manager setRequestSerializer:[AFJSONRequestSerializer serializer]];
     [manager setResponseSerializer:[AFJSONResponseSerializer serializer]];
     [[manager requestSerializer] setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
-    
-    // hack to allow 'text/plain' content-type to work
-    NSMutableSet *contentTypes = [NSMutableSet setWithSet:manager.responseSerializer.acceptableContentTypes];
-    [contentTypes addObject:@"text/html"];
-    manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json", @"text/json", @"text/javascript",@"text/html", nil];
+    manager.responseSerializer.acceptableContentTypes = [self acceptableContentTypes];
     
     // check if custom headers are present and add them
     if (headers != nil) {
@@ -190,6 +143,8 @@ andAuthrozationHeaderPassword:(NSString*)password
     [manager setRequestSerializer:[AFJSONRequestSerializer serializer]];
     [manager setResponseSerializer:[AFJSONResponseSerializer serializer]];
     [[manager requestSerializer] setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+    manager.responseSerializer.acceptableContentTypes = [self acceptableContentTypes];
+
     // check if custom headers are present and add them
     if (headers != nil) {
         [headers enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
@@ -240,6 +195,8 @@ andAuthrozationHeaderPassword:(NSString*)password
     [manager setRequestSerializer:[AFJSONRequestSerializer serializer]];
     [manager setResponseSerializer:[AFJSONResponseSerializer serializer]];
     [[manager requestSerializer] setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+    manager.responseSerializer.acceptableContentTypes = [self acceptableContentTypes];
+
     // check if custom headers are present and add them
     if (headers != nil) {
         [headers enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
@@ -290,6 +247,8 @@ andAuthrozationHeaderPassword:(NSString*)password
     [manager setRequestSerializer:[AFJSONRequestSerializer serializer]];
     [manager setResponseSerializer:[AFJSONResponseSerializer serializer]];
     [[manager requestSerializer] setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+    manager.responseSerializer.acceptableContentTypes = [self acceptableContentTypes];
+
     // check if custom headers are present and add them
     if (headers != nil) {
         [headers enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
